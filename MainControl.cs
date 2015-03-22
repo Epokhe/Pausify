@@ -51,6 +51,9 @@ namespace Pausify
         //True if user deactivated Pausify
         public static bool userDeactivated;
 
+        public static bool spotifyWarningShown;
+        public static bool unknownErrorShown;
+
         
         public enum SoundState
         {
@@ -141,7 +144,7 @@ namespace Pausify
                         }
                         else if (lastPress == 1 && programStatus == 1) //Last pausePlay() played Spotify and user didn't pause spotify
                         {
-                            Program.processIcon.showNotification(5000, Constants.appName, "Did you pause Spotify? If you start it, I'm ready!", ToolTipIcon.None);
+                            //Program.processIcon.showNotification(5000, Constants.appName, "Did you pause Spotify? If you start it, I'm ready!", ToolTipIcon.None);
                             Program.processIcon.setInactiveIcon();
                             programStatus = 0; 
                         }
@@ -150,7 +153,7 @@ namespace Pausify
                     case SoundState.Spotify: //Spotify sound
                         if (programStatus == 0) //User paused spotify before
                         {
-                            Program.processIcon.showNotification(5000, Constants.appName, "Here we go", ToolTipIcon.None);
+                            //Program.processIcon.showNotification(5000, Constants.appName, "Here we go", ToolTipIcon.None);
                             Program.processIcon.setPlayingIcon();
                             restart();
                         }
@@ -164,7 +167,7 @@ namespace Pausify
                     case SoundState.Both: //Both sounds
                         if (programStatus == 0) //User paused spotify before
                         {
-                            Program.processIcon.showNotification(5000, Constants.appName, "I'm working now, but if you just stop the other music :)", System.Windows.Forms.ToolTipIcon.None);
+                            //Program.processIcon.showNotification(5000, Constants.appName, "I'm working now", System.Windows.Forms.ToolTipIcon.None);
                             restart();
                         }
                         lastPress = 0;
@@ -185,6 +188,9 @@ namespace Pausify
 
             userDeactivated = false;
             transition = false;
+
+            spotifyWarningShown = false;
+            unknownErrorShown = false;
 
             currentQueueSize = Constants.SHORT_QUEUE_SIZE;
             ticksInactive = Constants.TICKS_BEFORE_START;

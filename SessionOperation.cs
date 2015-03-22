@@ -46,17 +46,19 @@ namespace Pausify
             sessionEnumerator.GetCount(out sessionCount);
 
             var hWnd = FindWindow("SpotifyMainWindow", null);
-            if (hWnd == IntPtr.Zero)
+            if (hWnd == IntPtr.Zero && !MainControl.spotifyWarningShown)
             {
-                Program.processIcon.showNotification(5000, Constants.appName, "I think you should open Spotify first.", ToolTipIcon.None);
+                Program.processIcon.showNotification(5000, Constants.appName, "Spotify is not running", ToolTipIcon.None);
+                MainControl.spotifyWarningShown = true;
                 return;
             }
 
             uint pID;
             GetWindowThreadProcessId(hWnd, out pID);
-            if (pID == 0)
+            if (pID == 0 && !MainControl.unknownErrorShown)
             {
-                Program.processIcon.showNotification(5000, Constants.appName, "Some error happened. I don't know why.", ToolTipIcon.None);
+                //Program.processIcon.showNotification(5000, Constants.appName, "Something bad happened", ToolTipIcon.None);
+                MainControl.unknownErrorShown = true;
                 return;
             }
 
