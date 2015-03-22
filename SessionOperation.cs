@@ -48,7 +48,7 @@ namespace Pausify
             var hWnd = FindWindow("SpotifyMainWindow", null);
             if (hWnd == IntPtr.Zero && !MainControl.spotifyWarningShown)
             {
-                Program.processIcon.showNotification(5000, Constants.appName, "Spotify is not running", ToolTipIcon.None);
+                //Program.processIcon.showNotification(5000, Constants.appName, "Spotify is not running", ToolTipIcon.None);
                 MainControl.spotifyWarningShown = true;
                 return;
             }

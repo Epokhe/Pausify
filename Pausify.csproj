@@ -28,7 +28,7 @@
     <ProductName>Pausify</ProductName>
     <PublisherName>Barış Özkuşlar</PublisherName>
     <MinimumRequiredVersion>0.9.1.0</MinimumRequiredVersion>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>0.9.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

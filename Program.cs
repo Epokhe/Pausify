@@ -19,7 +19,6 @@ using Pausify.Properties;
 namespace Pausify
 {
     //TODO: show start message only in first time application is opened
-    //TODO: give option to open at startup
     //TODO: Shorten the background sound reaction a little
 
     static class Program
