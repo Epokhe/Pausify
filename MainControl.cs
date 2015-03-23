@@ -82,6 +82,7 @@ namespace Pausify
                 {
                     ticksInactive--;
                 }
+                
 
                 //2 ticks after pause/play, because transition is not instant which causes noise
                 if (tickDelay == 0)
@@ -97,6 +98,7 @@ namespace Pausify
 
         private static void checkStates()
         {
+
             //Find Spotify Sound Average
             float spotifySoundAverage = 0;
             foreach (float spotifyLevel in spotifySoundQueue)
@@ -104,6 +106,7 @@ namespace Pausify
                 spotifySoundAverage += spotifyLevel;
             }
             spotifySoundAverage /= Constants.SPOTIFY_QUEUE_SIZE;
+            
 
             //Find Other Sound Average
             float otherSoundAverage = 0;
@@ -124,8 +127,15 @@ namespace Pausify
             else
             {
                 transition = false;
-                currentState += (spotifySoundAverage > Constants.SPOTIFY_SOUND_HIGH_LIMIT) ? Constants.SPOTIFY_MUSIC_PLAYING : 0;
-                currentState += (otherSoundAverage > Constants.OTHER_SOUND_HIGH_LIMIT) ? Constants.OTHER_SOUND_PLAYING : 0;
+                if (spotifySoundAverage > Constants.SPOTIFY_SOUND_HIGH_LIMIT)
+                {
+                    currentState += Constants.SPOTIFY_MUSIC_PLAYING;
+                }
+                if (otherSoundAverage > Constants.OTHER_SOUND_HIGH_LIMIT)
+                {
+                    currentState += Constants.OTHER_SOUND_PLAYING;
+                }
+                
             }
         }
 
@@ -133,10 +143,11 @@ namespace Pausify
         {
             if (!transition)
             {
+                
                 switch ((SoundState)currentState)
                 {
                     case SoundState.None: //No sound
-                        if (lastPress == 0) //Last pausePlay() paused Spotify
+                        if (lastPress == 0 && programStatus == 1) //Last pausePlay() paused Spotify
                         {
                             lastPress = 1;
                             Program.processIcon.setPlayingIcon();
@@ -162,6 +173,7 @@ namespace Pausify
 
                     case SoundState.Other: //Background sound
                         //Do nothing
+                        
                         break;
 
                     case SoundState.Both: //Both sounds

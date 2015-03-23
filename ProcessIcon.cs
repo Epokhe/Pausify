@@ -32,7 +32,7 @@ namespace Pausify
             setPlayingIcon();
             ni.Text = Constants.appName;
             ni.Visible = true;
-            showNotification(5000, Constants.appName, "You can double click on my icon to deactivate me, and right click to close.", ToolTipIcon.None);
+            showNotification(5000, Constants.appName, "You can double click on my icon to deactivate me, and right click to change my options or close me.", ToolTipIcon.None);
             
             // Attach a context menu.
             ni.ContextMenuStrip = new ContextMenus().Create();

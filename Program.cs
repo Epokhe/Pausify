@@ -52,6 +52,7 @@ namespace Pausify
             //Timer for performance measurement
             //Stopwatch sw = new Stopwatch();
             //sw.Start();
+            
             MainControl.processTicks();
             //sw.Stop();
             //Console.WriteLine("Elapsed={0}", sw.Elapsed);
