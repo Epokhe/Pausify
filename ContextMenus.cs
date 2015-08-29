@@ -15,17 +15,23 @@ namespace Pausify
     class ContextMenus
     {
         ContextMenuStrip menu;
-        ToolStripMenuItem closeItem;
-        ToolStripMenuItem startupItem;
+        ToolStripMenuItem exitItem, startupItem, settingsItem, adItem;
         bool startupEnabled;
 
         public ContextMenuStrip Create()
         {
             menu = new ContextMenuStrip();
+
+
+            adItem = new ToolStripMenuItem();
+            adItem.Text = "Mark as ad";
+            adItem.Click += new EventHandler(Ad_Click);
+            menu.Items.Add(adItem);
+
+
             checkStartup();
 
             startupItem = new ToolStripMenuItem();
-            startupItem.Name = "Startup";
             startupItem.Text = "Open at startup";
             startupItem.Click += new EventHandler(Startup_Click);
             if (startupEnabled)
@@ -39,11 +45,21 @@ namespace Pausify
             menu.Items.Add(startupItem);
 
 
-            closeItem = new ToolStripMenuItem();
-            closeItem.Text = "Close";
-            closeItem.Click += new System.EventHandler(Exit_Click);
+
+            settingsItem = new ToolStripMenuItem();
+            settingsItem.Text = "Settings";
+            settingsItem.Click += new EventHandler(Settings_Click);
+            menu.Items.Add(settingsItem);
+
+
+            exitItem = new ToolStripMenuItem();
+            exitItem.Text = "Exit";
+            exitItem.Click += new System.EventHandler(Exit_Click);
             //item.Image = Resources.Exit;
-            menu.Items.Add(closeItem);
+            menu.Items.Add(exitItem);
+
+
+
 
             
 
@@ -55,6 +71,33 @@ namespace Pausify
             Program.processIcon.Dispose();
             Application.Exit();
         }
+
+
+        void Settings_Click(object sender, EventArgs e){
+
+            if (!Program.settingsOpen)
+            {
+                Program.settingsForm = new SettingsForm();
+                Program.settingsForm.Show();
+                Program.settingsOpen = true;
+            }
+            else
+            {
+                Program.settingsForm.BringToFront();
+            }
+            
+        }
+
+
+        void Ad_Click(object sender, EventArgs e)
+        {
+            FileManager.addAd(PauseControl.spotifyWindowName);
+            if (Program.settingsOpen)
+            {
+                Program.settingsForm.refreshForm();
+            }
+        }
+
 
         void Startup_Click(object sender, EventArgs e)
         {
@@ -76,7 +119,7 @@ namespace Pausify
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             
-            if(rk.GetValue(Constants.appName) == null)
+            if(rk.GetValue(Configuration.appName) == null)
             {
                 startupEnabled = false;
             }
@@ -89,13 +132,13 @@ namespace Pausify
         private void setStartup()
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            rk.SetValue(Constants.appName, Application.ExecutablePath.ToString());
+            rk.SetValue(Configuration.appName, Application.ExecutablePath.ToString());
         }
 
         private void deleteStartup()
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            rk.DeleteValue(Constants.appName, false);
+            rk.DeleteValue(Configuration.appName, false);
         }
 
         

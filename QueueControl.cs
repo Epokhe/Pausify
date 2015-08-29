@@ -56,7 +56,7 @@ namespace Pausify
             }
             average /= currentQueueSize;
 
-            currentQueueSize = Constants.LONG_QUEUE_SIZE;
+            currentQueueSize = Configuration.LONG_QUEUE_SIZE;
 
             for (int i = 0; i < currentQueueSize; i++)
             {
@@ -79,7 +79,7 @@ namespace Pausify
             {
                 average += soundLevel;
             }
-            average /= Constants.TICKS_BEFORE_START;
+            average /= Configuration.TICKS_BEFORE_START;
 
 
             spotifySoundQueue.Clear();
@@ -93,7 +93,7 @@ namespace Pausify
             {
                 average += soundLevel;
             }
-            average /= Constants.TICKS_BEFORE_START;
+            average /= Configuration.TICKS_BEFORE_START;
 
             otherSoundQueue.Clear();
             for (int i = 0; i < currentQueueSize; i++)

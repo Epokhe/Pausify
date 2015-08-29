@@ -18,31 +18,49 @@ using Pausify.Properties;
 
 namespace Pausify
 {
-    //TODO: show start message only in first time application is opened
+    //A LOT OF CHANGES
+    //TODO: show start message only the first time application is opened
     //TODO: Shorten the background sound reaction a little
+    //TODO: change how installation and update works
+    
 
-    static class Program
+    class Program
     {
         public static ProcessIcon processIcon;
+        public static SettingsForm settingsForm;
         
+
+        public static bool settingsOpen = false;
+        
+
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            
+
             // Show the system tray icon.					
             processIcon = new ProcessIcon();
+            
+
+            
+            PauseControl.setInitials();
+            FileManager.checkFiles();
 
             processIcon.Display();
 
-            MainControl.setInitials();
+            
+
+
 
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             aTimer.Interval = 250;
             aTimer.Enabled = true;
-
+            
             // Make sure the application runs!
             Application.Run();
         }
@@ -50,12 +68,16 @@ namespace Pausify
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             //Timer for performance measurement
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             
-            MainControl.processTicks();
-            //sw.Stop();
-            //Console.WriteLine("Elapsed={0}", sw.Elapsed);
+
+
+            AdControl.decide();
+            PauseControl.processTicks();
+           
+            sw.Stop();
+            //Console.WriteLine("Elapsed={0} - Window name: {1}", sw.Elapsed,PauseControl.spotifyWindowName);
         }
 
     }

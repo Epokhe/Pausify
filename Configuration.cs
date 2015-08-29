@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Pausify
 {
-    class Constants
+    class Configuration
     {
         //Time
         public static int TICK_PERIOD = 250;
         public static int MS_IN_SEC = 1000;
         public static int TICKS_IN_SEC = MS_IN_SEC / TICK_PERIOD;
         public static int TICKS_BEFORE_START = 2 * TICKS_IN_SEC;
+        public static int TICKS_BEFORE_UPDATE = TICKS_IN_SEC * 60 * 60;
 
         //Queue
         public static int SHORT_QUEUE_SIZE = (int)(2 * TICKS_IN_SEC);
@@ -30,5 +31,15 @@ namespace Pausify
         public static float NORMALIZE_VALUE = 0.01f;
 
         public static string appName = "Pausify";
+        public static uint WM_GETTEXT = 0x000D;
+        public const int MAX_WINDOWNAME_SIZE = 200;
+
+        //Config File
+        public static bool firsttime = false;
+
+        public static bool option_adblock = false;
+        public static bool option_autopause = false;
+        public static bool option_remember = false;
+        public static float spotify_volume = 100f;
     }
 }

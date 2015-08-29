@@ -21,12 +21,12 @@ namespace Pausify
         {
             SpotifyController.pausePlay();
 
-            currentQueueSize = Constants.SHORT_QUEUE_SIZE;
+            currentQueueSize = Configuration.SHORT_QUEUE_SIZE;
 
             QueueControl.fillQueuesAfterPlay(ref otherSoundQueue, ref spotifySoundQueue, ref spotifyQueueSize, ref currentQueueSize);
 
             tickDelay = 2;
-            ticksInactive = Constants.TICKS_BEFORE_START;
+            ticksInactive = Configuration.TICKS_BEFORE_START;
         }
 
         public static void pauseSpotify(ref Queue<float> otherSoundQueue, ref Queue<float> spotifySoundQueue, ref int spotifyQueueSize, ref int currentQueueSize, ref int ticksInactive, ref int tickDelay)
@@ -36,7 +36,7 @@ namespace Pausify
             QueueControl.fillQueuesAfterPause(ref otherSoundQueue, ref spotifySoundQueue, ref spotifyQueueSize, ref currentQueueSize);
 
             tickDelay = 2;
-            ticksInactive = Constants.TICKS_BEFORE_START;
+            ticksInactive = Configuration.TICKS_BEFORE_START;
         }
     }
 }

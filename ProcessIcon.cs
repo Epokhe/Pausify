@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.Timers;
-using SpotifyLib;
-using System.Collections;
-using System.Diagnostics;
-using WindowsAudio;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Pausify.Properties;
 
 namespace Pausify
 {
- 
+
     class ProcessIcon 
     {
         NotifyIcon ni;
@@ -30,10 +19,12 @@ namespace Pausify
             // Put the icon in the system tray and allow it react to mouse clicks.
             ni.MouseDoubleClick += new MouseEventHandler(ni_MouseDoubleClick);
             setPlayingIcon();
-            ni.Text = Constants.appName;
+            ni.Text = Configuration.appName;
             ni.Visible = true;
-            showNotification(5000, Constants.appName, "You can double click on my icon to deactivate me, and right click to change my options or close me.", ToolTipIcon.None);
-            
+            if (Configuration.firsttime)
+            {
+                showNotification(5000, Configuration.appName, "You can double click on my icon to deactivate me, and right click to change my options or close me.", ToolTipIcon.None);
+            }
             // Attach a context menu.
             ni.ContextMenuStrip = new ContextMenus().Create();
         }
@@ -49,15 +40,15 @@ namespace Pausify
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (MainControl.userDeactivated) 
+                if (PauseControl.userDeactivated) 
                 {
                     setPlayingIcon();
-                    MainControl.activate(); 
+                    PauseControl.activate(); 
                 }
                 else 
                 {
                     setInactiveIcon();
-                    MainControl.deactivate(); 
+                    PauseControl.deactivate(); 
                 }
                 
             }
