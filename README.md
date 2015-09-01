@@ -1,11 +1,17 @@
 # Pausify
 
-A handy tool for Spotify which
+A tray tool for Spotify which
+* controls Spotify(play/pause) according to background sound.
 * mutes the ads
-* controls Spotify(play/pause) according to background music.
 
-It stays at system tray and tracks the sound coming from other programs and pauses Spotify when necessary. It also tracks Spotify window name and mutes Spotify when ads start to play.
+It stays at system tray and tracks the sound coming from other programs and pauses Spotify when necessary. It also tracks Spotify window name and mutes ads on Spotify when they start to play.
 
-Right now, only adblock feature can be used. There are few things to do, then Pausify will officially be released as full functional.
+I've created this tool out of my personal needs. I might add some new features from time to time, but I don't plan to update it regularly.
 
-Setup: http://www.ceng.metu.edu.tr/~e1881754/pausify/pausify-publish.rar
+## Todo
+* Hotkey for adding ads to blacklist
+* Track ads with spotify api if need be
+* Don't pause with Autopauser when ad is playing as muted
+
+## Download
+http://www.ceng.metu.edu.tr/~e1881754/pausify/pausify-publish.rar
