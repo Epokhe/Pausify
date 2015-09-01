@@ -73,6 +73,7 @@ namespace Pausify
 
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            adListBox.DataSource = null;
             Program.settingsOpen = false;
         }
 
@@ -112,7 +113,7 @@ namespace Pausify
 
         private void pauseCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            /*if (pauseCheckBox.Checked)
+            if (pauseCheckBox.Checked)
             {
                 //Start auto pauser
                 //create a option->their string or otherwise map
@@ -125,7 +126,7 @@ namespace Pausify
                 //Stop auto pauser
                 Configuration.option_autopause = false;
                 FileManager.changeConfig("autopause", "0");
-            }*/
+            }
         }
 
 

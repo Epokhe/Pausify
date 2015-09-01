@@ -29,14 +29,9 @@ namespace Pausify
 
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
         public static extern IntPtr SendMessageGetText(IntPtr hWnd, uint msg, UIntPtr wParam, StringBuilder lParam);
-
-        public static bool init_success = false;
-        public static IMMDeviceEnumerator deviceEnumerator;
-        public static IMMDevice speakers;
-        public static object audioSessionInterface;
-        public static Guid IID_IAudioSessionManager2;
-        public static IAudioSessionManager2 mgr;
-        public static IAudioSessionEnumerator sessionEnumerator;
+        
+        
+        
 
         public static uint spotify_pid;
         public static float sessionVolume = 0;
@@ -44,25 +39,24 @@ namespace Pausify
         public static float changeValue = 0;
 
         public static int myctr = 0;
+        
 
-
-
-        public static void init()
+        public static void processCurrentPeaks(ref Queue<float> otherSoundQueue, ref Queue<float> spotifySoundQueue)
         {
+            IMMDevice speakers;
+            object audioSessionInterface;
+            Guid IID_IAudioSessionManager2;
+            IMMDeviceEnumerator deviceEnumerator;
+            IAudioSessionEnumerator sessionEnumerator;
+            IAudioSessionManager2 mgr;
+
             deviceEnumerator = (IMMDeviceEnumerator)(new MMDeviceEnumerator());
             deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia, out speakers);
             IID_IAudioSessionManager2 = typeof(IAudioSessionManager2).GUID;
             speakers.Activate(ref IID_IAudioSessionManager2, 0, IntPtr.Zero, out audioSessionInterface);
             mgr = (IAudioSessionManager2)audioSessionInterface;
 
-            init_success = true;
-        }
-
-
-        public static void processCurrentPeaks(ref Queue<float> otherSoundQueue, ref Queue<float> spotifySoundQueue)
-        {
             myctr++;
-            if (!init_success) return;
 
             mgr.GetSessionEnumerator(out sessionEnumerator);
 
@@ -207,19 +201,36 @@ namespace Pausify
                 QueueControl.enqueue(ref otherSoundQueue, ref maxPeak); //Add current sound level to queue
             }
 
-            //Marshal.ReleaseComObject(sessionEnumerator);
-            //Marshal.ReleaseComObject(mgr);
-            //Marshal.ReleaseComObject(speakers);
-            //Marshal.ReleaseComObject(deviceEnumerator);
+            Marshal.ReleaseComObject(sessionEnumerator);
+            Marshal.ReleaseComObject(mgr);
+            Marshal.ReleaseComObject(speakers);
+            Marshal.ReleaseComObject(deviceEnumerator);
         }
 
 
         //not needed currently
         public static void changeSpotifyVolume(float value)
         {
-            if (!init_success) return;
+
+            IMMDeviceEnumerator deviceEnumerator = (IMMDeviceEnumerator)(new MMDeviceEnumerator());
+
+            IMMDevice speakers;
+            deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia, out speakers);
+
+            Guid IID_IAudioSessionManager2 = typeof(IAudioSessionManager2).GUID;
+
+            IAudioSessionEnumerator sessionEnumerator;
+
+            object audioSessionInterface;
+            speakers.Activate(ref IID_IAudioSessionManager2, 0, IntPtr.Zero, out audioSessionInterface);
+
+
+            IAudioSessionManager2 mgr = (IAudioSessionManager2)audioSessionInterface;
+
+            myctr++;
 
             mgr.GetSessionEnumerator(out sessionEnumerator);
+            
 
             int sessionCount;
             sessionEnumerator.GetCount(out sessionCount);
@@ -267,10 +278,10 @@ namespace Pausify
                 }
             }
 
-            //Marshal.ReleaseComObject(sessionEnumerator);
-            //Marshal.ReleaseComObject(mgr);
-            //Marshal.ReleaseComObject(speakers);
-            //Marshal.ReleaseComObject(deviceEnumerator);
+            Marshal.ReleaseComObject(sessionEnumerator);
+            Marshal.ReleaseComObject(mgr);
+            Marshal.ReleaseComObject(speakers);
+            Marshal.ReleaseComObject(deviceEnumerator);
         }
 
 

@@ -206,8 +206,7 @@ namespace Pausify
             ticksInactive = Configuration.TICKS_BEFORE_START;
 
             QueueControl.fillQueuesInitial(ref otherSoundQueue, ref spotifySoundQueue, ref Configuration.SPOTIFY_QUEUE_SIZE, ref currentQueueSize);
-
-            SessionOperation.init();
+            
 
         }
 

@@ -60,13 +60,13 @@
             // pauseCheckBox
             // 
             this.pauseCheckBox.AutoSize = true;
-            this.pauseCheckBox.Enabled = false;
             this.pauseCheckBox.Location = new System.Drawing.Point(19, 12);
             this.pauseCheckBox.Name = "pauseCheckBox";
-            this.pauseCheckBox.Size = new System.Drawing.Size(212, 17);
+            this.pauseCheckBox.Size = new System.Drawing.Size(81, 17);
             this.pauseCheckBox.TabIndex = 1;
-            this.pauseCheckBox.Text = "Auto Pause (CURRENTLY DISABLED)";
-            this.toolTip1.SetToolTip(this.pauseCheckBox, "Automatically pauses spotify when another sound plays");
+            this.pauseCheckBox.Text = "Auto Pause";
+            this.toolTip1.SetToolTip(this.pauseCheckBox, "Automatically pauses spotify when another sound plays\r\nNot tested recently, might" +
+        " have some bugs");
             this.pauseCheckBox.UseVisualStyleBackColor = true;
             this.pauseCheckBox.CheckedChanged += new System.EventHandler(this.pauseCheckBox_CheckedChanged);
             // 
